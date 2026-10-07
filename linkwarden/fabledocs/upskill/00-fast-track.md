@@ -10,7 +10,7 @@ All commands from the repo root. This repo uses **Yarn 4 via corepack** (`packag
 | --- | --- | --- |
 | Enable yarn 4 | `corepack enable && corepack prepare yarn@4.12.0 --activate` | __inferred__ (from `.github/workflows/playwright-tests.yml:71-75`) |
 | Install deps | `yarn install` | __inferred__ |
-| Configure env | copy `.env.sample` → `.env`; set `NEXTAUTH_URL=http://localhost:3000/api/v1/auth`, `NEXTAUTH_SECRET`, `DATABASE_URL=postgresql://user:pass@localhost:5432/linkwarden` | __inferred__ (var names from [.env.sample](../../.env.sample)) |
+| Configure env | copy `.env.sample` → `.env`; set `NEXTAUTH_URL=http://localhost:3000/api/v1/auth`, `NEXTAUTH_SECRET`, `DATABASE_URL=postgresql://user:pass@localhost:5432/linkwarden` | __inferred__ (upstream ships a `.env.sample`, but it is **not in this study snapshot**; confirm var names by grepping `process.env.` in `apps/web` and `apps/worker`) |
 | Generate Prisma client | `yarn prisma:generate` | __inferred__ |
 | Run migrations | `yarn prisma:deploy` | __inferred__ |
 | Start web + worker | `yarn concurrently:dev` (or `yarn web:dev` alone) | __inferred__ (scripts in [package.json](../../package.json)) |

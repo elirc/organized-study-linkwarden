@@ -64,3 +64,20 @@ Two claims were corrected during writing after re-verification: (1) the Prisma g
 - Unbounded `Promise.all` in `rssPolling.ts:19-36` on large installs.
 - `archiveHandler.ts` finally-block stamping `lastPreserved` on failure = no retry semantics.
 - Widespread 401-where-403 status codes in controllers.
+
+## Re-check on 2026-10-07 (study copy `elirc/organized-study-linkwarden`)
+
+Static re-check of `fabledocs/upskill/` only; nothing installed or run.
+
+- **Test inventory still matches:** the same 8 `*.test.ts` files. `packages/prisma/migrations/` now holds 92 directories; the earlier count of 93 most likely included `migration_lock.toml`.
+- **Anchor drift fixed:** the `['@login']` matrix is at `.github/workflows/playwright-tests.yml:42`, and L45 is the `ubuntu-22.04` runner. The anchor is corrected in six files. The corepack block at L71–75 is correct.
+- **Snapshot gap:** `.env.sample` is not in this clone, even though the import's `.gitignore` whitelists it. The two places that linked it now say so and point to grepping `process.env.` instead. `NEXTAUTH_URL`, `NEXTAUTH_SECRET` and `DATABASE_URL` all appear as `process.env.*` reads in `apps/web/lib/api/`.
+- **Spot-checked and holding:**
+  - `updateLinkById.ts:97-101`, the collection-access refusal;
+  - `verifyToken.ts:24-33`, the revoked-token lookup;
+  - `getPermission.ts:14-26`;
+  - `getLinkBatchFairly.ts:35-38`, `lastPreserved: null`;
+  - `resolveAccessibleArchive.ts:70-72`, the preview vs. format path;
+  - the `finally` block at `archiveHandler.ts:203`.
+- **Sharpened:** the RSS polling row in `05-key-flows.md` now cites the interval (`rssPolling.ts:8-9`) and the sleep (L36). `delay()` takes seconds (`packages/lib/utils.ts:13-15`), so the default really is 60 minutes. Because the sleep only starts after the whole `Promise.all` settles, the effective period is interval + slowest feed.
+- The `docs/` study folders were not edited in this pass; only `fabledocs/` is in scope.

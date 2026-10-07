@@ -16,7 +16,7 @@ An honest design review, as if you owned this codebase for the next 3 months. Do
 
 | # | Risk | Evidence | Impact | Confidence |
 | --- | --- | --- | --- | --- |
-| 1 | **Test coverage inverted vs risk**: worker (highest blast radius) has zero tests; CI enforces only a login e2e | `find` results in [verification log](../09-reference/verification-log.md); `playwright-tests.yml:45` | regressions ship silently | confirmed |
+| 1 | **Test coverage inverted vs risk**: worker (highest blast radius) has zero tests; CI enforces only a login e2e | `find` results in [verification log](../09-reference/verification-log.md); `playwright-tests.yml:42` | regressions ship silently | confirmed |
 | 2 | **Distributed authz with a misuse-prone primitive**: `getPermission({linkId})` ignores userId; every caller must remember the check | `getPermission.ts:14-26` | one forgotten check = IDOR | confirmed (as design; no exploit claimed) |
 | 3 | **Duplicated auth gates drifting** | `verifyUser.ts:60-70` vs `isAuthenticatedRequest.ts:44-46` (subscription semantics differ) | inconsistent access decisions | confirmed divergence; impact hypothesis |
 | 4 | **No retry semantics for archiving**; failure = permanent | `archiveHandler.ts:203-224` | transient network blip ⇒ link never preserved without manual re-trigger | confirmed behavior; severity depends on ops |

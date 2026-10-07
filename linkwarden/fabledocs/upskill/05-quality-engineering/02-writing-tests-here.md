@@ -26,7 +26,7 @@ Don't test `archiveHandler` whole (Playwright dependency). Extract-and-test: the
 Model: `pages/api/v1/archives/[linkId].test.ts` (read it — it exercises the *route*, including method dispatch and the Bearer-only monolith rule `[linkId].ts:93-102`). Mock `verifyToken`/`verifyUser` modules; build fake `req`/`res` with vitest fns; assert status writes.
 
 ## Recipe 8: E2E with fixtures
-Model: `e2e/tests/public/login.spec.ts` + fixtures (`e2e/fixtures/login-page.ts`). New specs: tag with `@yourtag` in the title so CI's grep matrix can target them (`playwright-tests.yml:45`); use the page-object pattern the fixtures establish; assert on visible outcomes (link card appears), never on network internals; do not wait for preservation (async — assert the row's *pre-archive* UI state).
+Model: `e2e/tests/public/login.spec.ts` + fixtures (`e2e/fixtures/login-page.ts`). New specs: tag with `@yourtag` in the title so CI's grep matrix can target them (`playwright-tests.yml:42`); use the page-object pattern the fixtures establish; assert on visible outcomes (link card appears), never on network internals; do not wait for preservation (async — assert the row's *pre-archive* UI state).
 
 ## Flake prevention rules for this repo
 No `waitForTimeout` — wait on locators/responses; keep worker OFF for e2e that don't need it (its writes mutate rows mid-test); fake timers for anything touching trial-window math (`getLinkBatchFairly.ts:60-68`); never assert on `createdAt` ordering across same-millisecond inserts (autoincrement `id` is the stable order — the code itself sorts by id for this reason, `getLinks.ts:15-16`).

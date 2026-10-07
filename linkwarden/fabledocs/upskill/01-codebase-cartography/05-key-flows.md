@@ -38,7 +38,7 @@ Validation and authorization: validation at steps 1, 2, 7 (only step 7 is load-b
 
 Persistence and side effects: Prisma create (step 13), folder creation `postLink.ts:164`, and the *deferred* side effect: the worker will find this row because `lastPreserved` is null.
 
-Tests that cover it: no direct controller test found (evidence: only 8 `*.test.ts` files exist, none for links controllers — see [09-reference/verification-log.md](../09-reference/verification-log.md)). E2E covers login only in CI (`.github/workflows/playwright-tests.yml:45` matrix `['@login']`).
+Tests that cover it: no direct controller test found (evidence: only 8 `*.test.ts` files exist, none for links controllers — see [09-reference/verification-log.md](../09-reference/verification-log.md)). E2E covers login only in CI (`.github/workflows/playwright-tests.yml:42` matrix `['@login']`).
 
 What juniors usually miss: the client-side parse (step 1) is cosmetic. Delete it and the system is still correct; delete step 7 and any authenticated user can insert garbage.
 
@@ -255,7 +255,7 @@ Trace:
 
 | Step | Owner | File | What happens | Risk |
 | --- | --- | --- | --- | --- |
-| 1 | Worker | `rssPolling.ts:13-15` | every `NEXT_PUBLIC_RSS_POLLING_INTERVAL_MINUTES` (default 60m) load **all** subscriptions | unbounded set |
+| 1 | Worker | `rssPolling.ts:13-15` (interval at L8-9, sleep at L36) | loop forever: load **all** subscriptions, process them, then `delay(pollingIntervalInSeconds)`. `delay` takes seconds (`packages/lib/utils.ts:13-15`), and the default is 60 min when `NEXT_PUBLIC_RSS_POLLING_INTERVAL_MINUTES` is unset | unbounded set; the sleep starts only after the slowest feed settles, so the real period is interval + slowest fetch |
 | 2 | Worker | `rssPolling.ts:19-36` | `Promise.all` over every feed; per-feed try/catch logs and continues | unbounded parallel fetches (*possible risk:* thundering herd on large installs) |
 | 3 | Sec | `rssPolling.ts:22` + `safeFetch.ts:95-124` | SSRF assert, then fetch with `redirect: "manual"` loop — **each redirect hop re-validated**, max 5 | redirects are the classic SSRF bypass; handled |
 | 4 | Lib | `rssHandler.ts` | compare `lastBuildDate`; create links for new items into the subscription's collection | dedupe by build date only |

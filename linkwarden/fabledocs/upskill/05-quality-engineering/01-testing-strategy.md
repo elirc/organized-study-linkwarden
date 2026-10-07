@@ -5,7 +5,7 @@
 | Layer | Tooling | Files | Run by CI? |
 | --- | --- | --- | --- |
 | Unit/integration (node) | vitest (`vitest.config.mts` — excludes e2e, alias `@`→apps/web) | 8 files: ssrf, resolveAccessibleArchive, createPreservedFormatUrl, preserved token/view, archives route, config route, importFromHTMLFile | **No** |
-| E2E | Playwright (`apps/web/playwright.config.ts`, fixtures in `e2e/fixtures/`) | login spec + dashboard/public setup | Yes — grep `@login` only (`playwright-tests.yml:45`) |
+| E2E | Playwright (`apps/web/playwright.config.ts`, fixtures in `e2e/fixtures/`) | login spec + dashboard/public setup | Yes — grep `@login` only (`playwright-tests.yml:42`) |
 | Types | `next build` (web); `tsc --noEmit` script (worker) | — | web yes (via build); worker no |
 
 Read the coverage against the [risk register](../09-reference/risk-register.md): the tested code (archive access, preserved tokens, SSRF) is the *security-critical* code — someone triaged deliberately. The untested-but-complex code (worker scheduling, search, optimistic caching, permission matrix in updateLinkById) is where your contribution energy goes.

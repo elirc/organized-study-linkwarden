@@ -4,7 +4,7 @@ Consolidated from all modules. Confidence: **confirmed** = behavior read directl
 
 | # | Risk | Evidence (anchors) | Impact | Likelihood | Suggested test | Suggested fix | Confidence |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | CI enforces almost nothing (unit tests, lint, worker typecheck all absent) | `.github/workflows/playwright-tests.yml:45` (only `@login`) | regressions ship | high (structural) | n/a | add vitest + typecheck jobs ([Ticket 1](../06-contribution-practice/01-good-first-tickets.md)) | confirmed |
+| 1 | CI enforces almost nothing (unit tests, lint, worker typecheck all absent) | `.github/workflows/playwright-tests.yml:42` (only `@login`) | regressions ship | high (structural) | n/a | add vitest + typecheck jobs ([Ticket 1](../06-contribution-practice/01-good-first-tickets.md)) | confirmed |
 | 2 | `getPermission({linkId})` ignores userId; callers must remember the check | `getPermission.ts:14-26` | IDOR if one caller forgets | medium | grep-audit + per-endpoint two-user tests | resolver returns relationship verdict, not raw rows | confirmed (design) |
 | 3 | Auth-gate duplication with drifted subscription semantics | `verifyUser.ts:60-70` vs `isAuthenticatedRequest.ts:44-46` | inconsistent access decisions | medium | table-test both against same fixtures | unify (Kata 1) | confirmed divergence |
 | 4 | Archive failures permanent (no retries) | `archiveHandler.ts:203-224` | transient failure = never preserved | high (by design) | poison-URL + transient-failure soak | bounded retries (M3) | confirmed |

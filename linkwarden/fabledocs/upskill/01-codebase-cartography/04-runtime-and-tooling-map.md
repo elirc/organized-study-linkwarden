@@ -31,7 +31,7 @@ Full cheat sheet: [09-reference/command-cheatsheet.md](../09-reference/command-c
 
 Code in `packages/router` and `packages/lib` must run in **multiple** runtimes — that's why platform things (toast, Alert, session) are injected as parameters (`links.tsx:383-393`).
 
-## Env vars, by concern (names from [.env.sample](../../../.env.sample); no secrets here)
+## Env vars, by concern (names from upstream's `.env.sample`, which is absent from this study snapshot; each name can be confirmed by grepping `process.env.<NAME>` in the code; no secrets here)
 
 - **Core:** `NEXTAUTH_URL`, `NEXTAUTH_SECRET`, `DATABASE_URL`
 - **Behavior/limits:** `PAGINATION_TAKE_COUNT`, `MAX_LINKS_PER_USER`, `ARCHIVE_TAKE_COUNT`, `BROWSER_TIMEOUT`, `IMPORT_LIMIT`, various `*_MAX_BUFFER`

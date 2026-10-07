@@ -9,7 +9,7 @@
 ## Ticket 1: Add a CI job that runs unit tests
 Difficulty: Easy — 2-4h. Skills: GitHub Actions, CI reasoning.
 Story: As a maintainer, I want `yarn test` to run on every PR so unit-tested code can't silently break.
-Why good: CI currently runs only Playwright `@login` (`.github/workflows/playwright-tests.yml:45`); 8 vitest files exist but nothing enforces them.
+Why good: CI currently runs only Playwright `@login` (`.github/workflows/playwright-tests.yml:42`); 8 vitest files exist but nothing enforces them.
 Acceptance: - [ ] new workflow (or job) runs `yarn install && yarn test` on PR - [ ] green on current main - [ ] no Postgres needed (current unit tests are hermetic — verify).
 Read first: `.github/workflows/playwright-tests.yml` (setup steps to copy), `vitest.config.mts`.
 Files touched: `.github/workflows/unit-tests.yml` (new).
@@ -112,7 +112,7 @@ Interview story potential: "identified a thundering-herd risk and scoped the fix
 ## Ticket 14: E2E test for link creation
 Difficulty: Medium — 4-6h. Skills: Playwright, fixtures.
 Story: As a maintainer, I want a `@links` e2e (create link → appears in list) alongside `@login`.
-Read first: `apps/web/e2e/fixtures/*`, `tests/public/login.spec.ts`, CI matrix (`playwright-tests.yml:45` — add the tag).
+Read first: `apps/web/e2e/fixtures/*`, `tests/public/login.spec.ts`, CI matrix (`playwright-tests.yml:42` — add the tag).
 Could go wrong: waiting on archive completion (don't — assert the row, not preservation).
 Interview story potential: "extended a minimal e2e suite; learned fixture design" — testing-strategy story.
 
